@@ -1,0 +1,22 @@
+{
+  "name": "productmanager",
+  "version": "1.0.0",
+  "description": "Product Manager created for student purposes",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GastonGaraza/ProductManager.git"
+  },
+  "author": "GastonGaraza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GastonGaraza/ProductManager/issues"
+  },
+  "homepage": "https://github.com/GastonGaraza/ProductManager#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
