@@ -18,6 +18,7 @@ class ProductManager {
 	};
 
 	getProducts = async () => {
+		console.log(this.productsFile);
         if (fs.existsSync(this.productsFile)) {
 			try {
 				const allProducts = await fs.promises.readFile(this.productsFile, 'utf-8');
@@ -100,6 +101,16 @@ class ProductManager {
 		return null;
 	}
 
+	checkProduct = async code => {
+		let allProducts = await this.getProducts();
+		for (let i = 0; i < allProducts.length; i++) {
+			if (allProducts[i].code === code) {
+				return allProducts[i];
+			}
+		}
+		return null;
+	}
+
 	getCartById = async cartId => {
 		let allCarts = await this.getCarts();
 		for (let i = 0; i < allCarts.length; i++) {
@@ -111,26 +122,32 @@ class ProductManager {
 	}
 
 	addCartItem = async (cid, pid, quantity) => {
-		let allCarts = await this.getCarts();
-		for (let i = 0; i < allCarts.length; i++) {
-			if (allCarts[i].id === cid) {
-				const item = {"pid": pid, "quantity": quantity};
-				let findedItem = null;
-				for (let j = 0; j < allCarts[i].products.length; j++) {
-					if (allCarts[i].products[j].pid === pid) {
-						findedItem = allCarts[i].products[j];
-						allCarts[i].products[j].quantity += quantity;
-						break;
+		let productToAdd = await this.getProductById(pid);
+		if	(productToAdd){
+			let allCarts = await this.getCarts();
+			for (let i = 0; i < allCarts.length; i++) {
+				if (allCarts[i].id === cid) {
+					const item = {"pid": pid, "quantity": quantity};
+					let findedItem = null;
+					for (let j = 0; j < allCarts[i].products.length; j++) {
+						if (allCarts[i].products[j].pid === pid) {
+							findedItem = allCarts[i].products[j];
+							allCarts[i].products[j].quantity += quantity;
+							break;
+						}
 					}
+					if (!findedItem){
+						allCarts[i].products.push(item);
+					}
+					await this.writeFile(this.cartsFile, allCarts);
+					return allCarts[i];
 				}
-				if (!findedItem){
-					allCarts[i].products.push(item);
-				}
-				await this.writeFile(this.cartsFile, allCarts);
-				return allCarts[i];
 			}
+			return null;
+		}else{
+			console.error("Couldn't find the specified product with id: " + pid);
+			return null;
 		}
-		return null;
 	}
 
 	deleteProduct = async productId => {

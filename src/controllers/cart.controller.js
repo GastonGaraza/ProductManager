@@ -1,5 +1,5 @@
 const ProductManager = require('../ProductManager');
-const productManager = new ProductManager('../');
+const productManager = new ProductManager('./');
 const Cart = require('../models/cart.model');
 const CartItem = require('../models/cartitem.model');
 
@@ -29,8 +29,13 @@ exports.addCartItem = async (req, res) => {
         const cid = parseInt(req.params.cid);
         const pid = parseInt(req.params.pid);
         const quantity = !req.body.quantity ? 1 : req.body.quantity;
-        const findedCart = await productManager.addCartItem(cid, pid, quantity);  
-        res.send(findedCart);  
+        const result = await productManager.addCartItem(cid, pid, quantity);  
+        console.log(result);
+        if (result){
+            res.send(result); 
+        }else{
+            res.sendStatus(500);
+        }
     } catch (error) {
         console.error(error);
         res.sendStatus(500);
