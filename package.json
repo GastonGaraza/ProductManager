@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/GastonGaraza/ProductManager#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.4",
+    "socket.io": "^4.6.1"
   }
 }

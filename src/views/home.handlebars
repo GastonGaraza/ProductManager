@@ -1,0 +1,16 @@
+<div class="container-fluid container-page">
+    <div class="row">
+        <div class="col-md-12 border-rounded " class="form-horizontal">
+            <center><h2>Productos</h2></center>
+            {{#each allProducts}}
+            <div class="row border-rounded">
+                 <div class="col-md-12"><b>Product title:</b> {{this.title}}</div> 
+                 <div class="col-md-12"><b>Products description:</b> {{this.description}}</div> 
+                 <div class="col-md-12"><b>Products code:</b> {{this.code}}</div> 
+                 <div class="col-md-12"><b>Products price:</b> {{this.price}}</div> 
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
